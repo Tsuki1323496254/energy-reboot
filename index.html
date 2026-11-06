@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#FFF8EC">
+<meta name="description" content="精力重启 · 28 天小助手：睡眠、专注、运动、饮食，一天一点，把精力调回来。">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="精力重启">
+<title>精力重启 · 28 天小助手</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="bg-blobs" aria-hidden="true">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  <span class="blob b4"></span><span class="blob b5"></span>
+</div>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">🍅</div>
+      <div>
+        <h1>精力重启</h1>
+        <p class="sub">28 天 · 小助手</p>
+      </div>
+    </div>
+    <div class="streak" title="连续达标天数">
+      <span>🔥</span><b id="streakNum">0</b><span class="streak-txt">天</span>
+    </div>
+  </header>
+
+  <main id="views">
+    <!-- ============ 今天 ============ -->
+    <section class="view active" id="view-today">
+      <div class="card hero">
+        <div class="hero-top">
+          <span class="chip" id="dayChip">第 1 天 / 28</span>
+          <span class="chip ghost" id="weekChip">重启周</span>
+        </div>
+        <div class="hero-main">
+          <div class="mascot happy" id="mascot">
+            <svg viewBox="0 0 120 120" role="img" aria-label="小番茄豆豆">
+              <ellipse class="m-shadow" cx="60" cy="106" rx="30" ry="6"/>
+              <path class="m-leaf" d="M60 26c-4-10-14-13-22-11 2 8 8 13 16 14-3 1-6 1-9 0 3 8 10 12 17 11 6 1 13-3 16-11-3 1-6 1-9 0 8-1 14-6 16-14-8-2-18 1-22 11Z"/>
+              <path class="m-body" d="M60 30c20 0 34 15 34 34 0 21-15 36-34 36S26 85 26 64c0-19 14-34 34-34Z"/>
+              <g class="m-eyes">
+                <circle class="m-eye" cx="47" cy="64" r="5.5"/>
+                <circle class="m-eye" cx="73" cy="64" r="5.5"/>
+                <circle class="m-glint" cx="45.2" cy="62.2" r="1.8"/>
+                <circle class="m-glint" cx="71.2" cy="62.2" r="1.8"/>
+              </g>
+              <g class="m-blush">
+                <ellipse cx="38" cy="76" rx="6" ry="3.6"/>
+                <ellipse cx="82" cy="76" rx="6" ry="3.6"/>
+              </g>
+              <path class="m-mouth" d="M53 76c2.5 4 4.5 5.5 7 5.5s4.5-1.5 7-5.5"/>
+            </svg>
+          </div>
+          <div class="bubble" id="mascotBubble">今天也一起加油鸭～</div>
+        </div>
+        <div class="hero-bottom">
+          <div class="ring-wrap" id="todayRingWrap">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="42"/>
+              <circle class="ring-fg" id="todayRing" cx="50" cy="50" r="42"/>
+            </svg>
+            <div class="ring-center">
+              <b id="todayPct">0%</b>
+              <span>今日完成</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><b id="todayDone">0</b><span>项完成</span></div>
+            <div class="stat"><b id="todayRounds">0</b><span>番茄轮数</span></div>
+            <div class="stat"><b id="todayWater">0</b><span>杯水</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>今日清单</h2>
+        <span class="count" id="checkCount">0 / 7</span>
+      </div>
+      <div id="checklist" class="checklist"></div>
+
+      <div class="section-head">
+        <h2>喝水</h2>
+        <span class="count" id="waterCount">0 / 8</span>
+      </div>
+      <div class="card water-card">
+        <div class="cups" id="cups"></div>
+        <p class="hint">点小水滴记录，喝够 8 杯就算完成这一项。</p>
+      </div>
+
+      <div class="section-head">
+        <h2>番茄专注</h2>
+        <button class="link-btn" data-goto="focus">去专注 →</button>
+      </div>
+      <div class="card focus-mini" id="focusMini"></div>
+
+      <div class="card tip-strip" id="tipStrip"></div>
+    </section>
+
+    <!-- ============ 专注 ============ -->
+    <section class="view" id="view-focus">
+      <div class="card focus-card">
+        <div class="focus-head">
+          <span class="chip" id="focusWeekChip">第 1 周 · 15 分钟</span>
+          <span class="chip ghost" id="focusModeChip">专注</span>
+        </div>
+        <div class="timer-wrap">
+          <svg class="timer-svg" viewBox="0 0 120 120">
+            <circle class="timer-bg" cx="60" cy="60" r="52"/>
+            <circle class="timer-fg" id="timerRing" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="timer-center">
+            <div class="timer-time" id="timerTime">15:00</div>
+            <div class="timer-sub" id="timerSub">准备开始</div>
+          </div>
+        </div>
+        <div class="preset-row" id="presetRow"></div>
+        <div class="focus-actions">
+          <button class="btn primary" id="btnStart">开始专注</button>
+          <button class="btn ghost" id="btnReset">重置</button>
+        </div>
+        <div class="focus-stats">
+          <div class="stat"><b id="roundsToday">0</b><span>今日轮数</span></div>
+          <div class="stat"><b id="roundsTotal">0</b><span>累计轮数</span></div>
+          <div class="stat"><b id="focusMin">0</b><span>累计分钟</span></div>
+        </div>
+      </div>
+
+      <div class="card soft-card">
+        <h3>🍅 渐进式番茄节奏</h3>
+        <div class="week-rhythm" id="rhythmList"></div>
+        <p class="hint">专注时手机放远；休息时站起来走走、喝口水、看看远处。</p>
+      </div>
+    </section>
+
+    <!-- ============ 28 天 ============ -->
+    <section class="view" id="view-plan">
+      <div class="card plan-head">
+        <div class="plan-top">
+          <div>
+            <h2>28 天计划</h2>
+            <p class="hint" id="planRange">—</p>
+          </div>
+          <div class="plan-ring">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="42"/>
+              <circle class="ring-fg mint" id="planRing" cx="50" cy="50" r="42"/>
+            </svg>
+            <div class="ring-center small"><b id="planPct">0%</b><span>达标率</span></div>
+          </div>
+        </div>
+        <div class="plan-legend">
+          <span><i class="dot done"></i>达标（≥5 项）</span>
+          <span><i class="dot"></i>未完成</span>
+          <span><i class="dot today"></i>今天</span>
+        </div>
+      </div>
+      <div id="weeks"></div>
+    </section>
+
+    <!-- ============ 贴士 ============ -->
+    <section class="view" id="view-tips">
+      <div class="card soft-card">
+        <h2>🌿 五件小事，把状态调回来</h2>
+        <p class="hint">睡眠打底 → 注意力训练 → 身体充电 → 饮食稳定 → 外脑减负</p>
+      </div>
+      <div id="tipsList"></div>
+    </section>
+
+    <!-- ============ 我的 ============ -->
+    <section class="view" id="view-me">
+      <div class="card">
+        <h2>⚙️ 我的设置</h2>
+        <div class="form-row">
+          <label for="inpStart">计划开始日期</label>
+          <input type="date" id="inpStart">
+        </div>
+        <div class="form-row">
+          <label for="inpBed">目标睡觉时间</label>
+          <input type="time" id="inpBed">
+        </div>
+        <div class="form-row">
+          <label for="inpWake">目标起床时间</label>
+          <input type="time" id="inpWake">
+        </div>
+        <div class="form-row">
+          <label for="inpWater">每日喝水目标（杯）</label>
+          <input type="number" id="inpWater" min="4" max="12" step="1">
+        </div>
+        <p class="hint">改动会立即生效，打卡记录不受影响。</p>
+      </div>
+
+      <div class="card">
+        <h2>📦 数据</h2>
+        <div class="btn-row">
+          <button class="btn mint" id="btnExport">导出备份</button>
+          <button class="btn ghost" id="btnImport">导入备份</button>
+        </div>
+        <input type="file" id="fileImport" accept="application/json" hidden>
+        <button class="btn danger" id="btnResetAll">清空全部数据</button>
+        <p class="hint">数据只保存在你手机/电脑的本地浏览器里，不上传服务器。</p>
+      </div>
+
+      <div class="card">
+        <h2>💛 关于</h2>
+        <p class="about-text">
+          精力重启 · 28 天小助手 —— 开源（MIT 协议）、离线可用、不收集任何数据。<br>
+          内容依据「28 天精力重启计划」整理，参考来源：小荷 AI 医生；仅作生活方式调整建议，不替代医疗诊断。
+        </p>
+        <p class="hint">版本 1.0.0 · 纯 HTML/CSS/JS，无框架、无追踪。</p>
+        <button class="btn ghost" id="btnInstall" hidden>安装到桌面</button>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" id="tabbar" aria-label="底部导航">
+    <button class="tab active" data-tab="today"><span class="tab-ico">🌱</span><span>今天</span></button>
+    <button class="tab" data-tab="focus"><span class="tab-ico">🍅</span><span>专注</span></button>
+    <button class="tab" data-tab="plan"><span class="tab-ico">📅</span><span>28 天</span></button>
+    <button class="tab" data-tab="tips"><span class="tab-ico">💡</span><span>贴士</span></button>
+    <button class="tab" data-tab="me"><span class="tab-ico">🐻</span><span>我的</span></button>
+  </nav>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
