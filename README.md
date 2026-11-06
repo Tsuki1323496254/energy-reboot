@@ -4,6 +4,9 @@
 
 纯 HTML / CSS / JavaScript 手写，无框架、无依赖、无追踪、不联网也能用；数据只存在你自己的浏览器里。
 
+🚀 **在线体验（GitHub Pages）**：<https://Tsuki1323496254.github.io/energy-reboot/>
+📦 **开源仓库**：<https://github.com/Tsuki1323496254/energy-reboot>
+
 ![预览](docs/preview-today.png)
 
 ## ✨ 功能
